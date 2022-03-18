@@ -240,17 +240,10 @@ if(window.location.href.includes("+")){
     const urlInfo = (((window.location.href.split("?"))[1]).split("+"));
 
     if(urlInfo[1]==adminUsername && urlInfo[2]==adminPassword){
-        if(urlInfo[0] == "reports"){
-            globalThis.confirmLogin = true;
-            generatePredictionContent();
-            hidePredictions();
-            generateReportContent();
-        }
-        else if(urlInfo[0] == "predictions"){
-            globalThis.confirmLogin = true;
-            generatePredictionContent();
-            hideReports();
-            generateReportContent();
-        }
+        globalThis.confirmLogin = true;
+        generatePredictionContent();
+        generateReportContent();
+        if(urlInfo[0] == "reports") hidePredictions();
+        else if(urlInfo[0] == "predictions") hideReports();
     }
 }
