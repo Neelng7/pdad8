@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>        
+    <script src="https://www.gstatic.com/firebasejs/6.3.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.3.0/firebase-database.js"></script>
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDXKAkvjpRIw0QvoG3l-QfqdN10rIs0-_0",
+        authDomain: "time-capsule-1.firebaseapp.com",
+        databaseURL: "https://time-capsule-1-default-rtdb.firebaseio.com",
+        projectId: "time-capsule-1",
+        storageBucket: "time-capsule-1.appspot.com",
+        messagingSenderId: "775954139303",
+        appId: "1:775954139303:web:913fd1e3454d4e4e82b382"
+        };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <link href="styles.css" rel="stylesheet"/>
+    <script src="reportProblem.js" defer></script>
+    <script src="admin.js" defer></script>
+    <script src="fetch.js" defer></script>
+    <link class="link" rel="icon" href="images/Logo.png" type="image/icon type">
+    <title>Admin - Predictions</title>
+</head>
+<body>
+    <header>
+        <!-- <img id="LogoWhite"src='images/LogoWhite.png' width="7%" height="55%"> -->
+        <h1 id="h1main">Predictions</h1>
+        <a title="Home" href="/">Home</a>........
+        <a onclick="hideReports()" id="PredictionAnchor" title="Predictions">Predictions</a>........
+        <a onclick="hidePredictions()" id="ReportAnchor" title="Reports">Report</a>
+    </header><br><br><br><br><br><br><br>
+
+<div id="admin-login">
+    <h1>Search</h1><br>
+    <div>
+    <label for="admin-username">Username: </label>
+    <input type="text" id="admin-username" class="inp">        
+    </div><div>
+    ......<label for="admin-password">Password: </label>
+    <input type="password" id="admin-password" class="inp">     
+    <i class="fa-solid fa-eye" id="showPassword" onclick="showPassword()"></i>   
+    </div>
+    <button type="button" onclick="verify()" class="btn">Enter</button>
+</div>
+
+<div id="admin-content" class="hide">
+    <div id="search-div">    
+            <h1>Search</h1>
+            <label for="search">Search Prediction: </label>
+            <input type="search" id="search" data-seach>
+            <a title="Refresh Results" id="refresh-search" onclick="callPredictions()" class="fa">&#xf01e;</a><br><br>
+            (Enter in search  bar to update count)<br><br>
+            <p id="resultsCount"></p>
+            <label for="predictionsCount">Count: </label>
+            <input type="text" id="predictionsCount" disabled class="inp"><br><br>
+            <button class="btn" onclick="uploadRandUsers()">Add Predictions</button><br><br><br> 
+        <!-- </div> -->
+        <div class="prediction-cards" data-prediction-cards-container></div>
+        <template data-user-template>
+            <a id="checked" onclick="checkoutSearchedPrediction(this.id)" class="card">
+                <div class="header" data-header></div>
+                <div class="body" data-body></div>
+                <div class="search-password" data-password></div>
+                <div class="search-prediction-main" data-prediction-main></div>
+                <div class="search-tags" data-tags></div>
+                <div class="search-type" data-type></div>
+            </a>
+        </template>
+    </div>
+    
+    <div id="report-div" class="hide">
+        <h1>Reports</h1>
+
+        <label for="countID">Database Count</label>
+        <input id="countID" type="text" class="inp">
+        <button onclick="updateReportCount()" class="btn">Enter</button>...
+        <a title="Refresh Results" id="refresh-search2" onclick="callReport();" class="fa">&#xf01e;</a><br><br>
+        <label for="reportsCount">Reports Count: </label><input type="text"id="reportsCount" disabled class="inp"><br><br><br>
+
+        <div class="report-cards" data-report-cards-container></div>
+        <template data-report-template>
+            <div class="card2">
+                <div class="report" data-report></div>
+                <div id="emailID" class="email" data-email></div>
+                <div id="deleteReport" class="deleteReport" onclick="deleteReport(this.id)">Delete <svg width="14px" height="14px"xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg></div>
+            </div>
+        </template>
+    </div>
+</div>
+
+    <br><br><br><br><br><footer class="footer">
+        <div class="footerDiv">
+            <br><br>
+            <label id="reportButtonLabel" for="problemButton">Want to report a problem</label>..
+            <button class="reportButton" id="problemButton" onclick="show()">Report</button>
+            <input id="reportProblem" placeholder="problem" class="hide">.
+            <input type="email" id="reportEmail" placeholder="email (optional)" class="hide">.
+            <button class="reportButton hide" id="problemButton2" onclick="report()">Report</button>.
+            <button class="reportButton hide" id="problemButton3" onclick="cancel()">Cancel</button>        
+        </div>
+        <p class="footerP">&#169; This page was created by Neel</p>
+    </footer>    
+    
+</body>
+</html>
