@@ -44,7 +44,7 @@ if(problem.value == "" || problem.value == null){
     cancel();
     problem.value="";
     email.value="";   
-    if(window.location.href.includes("/admin")) callReport();
+    callReport();
     });
 }
 }
