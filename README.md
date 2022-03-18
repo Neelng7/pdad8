@@ -1,1 +1,1 @@
-# predictions-admin
+# admin
