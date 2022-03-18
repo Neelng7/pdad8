@@ -228,11 +228,11 @@ function showPassword(){
 
 
 function callReport(){
-if(confirmLogin === true) window.location.href="/?reports+" + adminUsername +"+"+ adminPassword;      
+if(confirmLogin === true) window.location.href="/pdad8/?reports+" + adminUsername +"+"+ adminPassword;      
 }
 
 function callPredictions(){
-if(confirmLogin === true) window.location.href="/?predictions+" + adminUsername +"+"+ adminPassword; 
+if(confirmLogin === true) window.location.href="/pdad8/?predictions+" + adminUsername +"+"+ adminPassword; 
 }
 
 if(window.location.href.includes("+")){
