@@ -146,7 +146,7 @@ if(confirm("Open Prediction?")){
         var updatedbName = value.children[1].textContent.slice(6,).split(" ");
         var updatedbpassword = value.children[2].textContent.slice(10,); 
 
-        window.location.href = "/modify-prediction.html?" + updatedbusername + "+" + updatedbName[0] + 
+        window.location.href = "https://neelng7.github.io/predictions/modify-prediction?" + updatedbusername + "+" + updatedbName[0] + 
             "+" + updatedbName[1] +"+"+ updatedbpassword;
 
     }
@@ -228,11 +228,11 @@ function showPassword(){
 
 
 function callReport(){
-if(confirmLogin === true) window.location.href="/admin.html?reports+" + adminUsername +"+"+ adminPassword;      
+if(confirmLogin === true) window.location.href="/?reports+" + adminUsername +"+"+ adminPassword;      
 }
 
 function callPredictions(){
-if(confirmLogin === true) window.location.href="/admin.html?predictions+" + adminUsername +"+"+ adminPassword; 
+if(confirmLogin === true) window.location.href="/?predictions+" + adminUsername +"+"+ adminPassword; 
 }
 
 if(window.location.href.includes("+")){
