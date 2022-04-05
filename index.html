@@ -21,20 +21,24 @@
       firebase.initializeApp(firebaseConfig);
     </script>
 
+    <!-- <script src="admin.js" defer></script> -->
+    <!-- <script src="fetch.js" defer></script> -->
+    <script src="https://neelng7.github.io/pdad8/admin.js" defer></script>
+    <script src="https://neelng7.github.io/pdad8/fetch.js" defer></script>
+
+    <base href="https://neelng7.github.io/predictions/">
     <link href="styles.css" rel="stylesheet"/>
     <script src="reportProblem.js" defer></script>
-    <script src="admin.js" defer></script>
-    <script src="fetch.js" defer></script>
     <link class="link" rel="icon" href="images/Logo.png" type="image/icon type">
     <title>Admin - Predictions</title>
 </head>
 <body>
     <header>
-        <!-- <img id="LogoWhite"src='images/LogoWhite.png' width="7%" height="55%"> -->
         <h1 id="h1main">Predictions</h1>
-        <a title="Home" href="https://neelng7.github.io/predictions/">Home</a>........
-        <a onclick="hideReports()" id="PredictionAnchor" title="Predictions">Predictions</a>........
-        <a onclick="hidePredictions()" id="ReportAnchor" title="Reports">Report</a>
+        <a title="Home" href="">Home</a>........
+        <a onclick="showPredictions()" id="PredictionAnchor" title="Predictions">Predictions</a>........
+        <a onclick="showReports()" id="ReportAnchor" title="Reports">Report</a>........
+        <a onclick="showUnread()" id="UnreadAnchor" title="Unread">Unread</a><br>.
     </header><br><br><br><br><br><br><br>
 
 <div id="admin-login">
@@ -55,11 +59,10 @@
             <h1>Search</h1>
             <label for="search">Search Prediction: </label>
             <input type="search" id="search" data-seach>
-            <a title="Refresh Results" id="refresh-search" onclick="callPredictions()" class="fa">&#xf01e;</a><br><br>
-            (Enter in search  bar to update count)<br><br>
+            <a title="Refresh Results" id="refresh-search" onclick="callPredictions()" class="fa">&#xf01e;</a><br>
             <p id="resultsCount"></p>
             <label for="predictionsCount">Count: </label>
-            <input type="text" id="predictionsCount" disabled class="inp"><br><br>
+            <input type="text" id="predictionsCount" disabled class="inp count"><br><br>
             <button class="btn" onclick="uploadRandUsers()">Add Predictions</button><br><br><br> 
         <!-- </div> -->
         <div class="prediction-cards" data-prediction-cards-container></div>
@@ -79,10 +82,11 @@
         <h1>Reports</h1>
 
         <label for="countID">Database Count</label>
-        <input id="countID" type="text" class="inp">
+        <input id="countID" class="count" type="text" class="inp">
         <button onclick="updateReportCount()" class="btn">Enter</button>...
         <a title="Refresh Results" id="refresh-search2" onclick="callReport();" class="fa">&#xf01e;</a><br><br>
-        <label for="reportsCount">Reports Count: </label><input type="text"id="reportsCount" disabled class="inp"><br><br><br>
+        <label for="reportsCount">Reports Count: </label>
+        <input type="text" id="reportsCount" disabled class="inp count"><br><br><br>
 
         <div class="report-cards" data-report-cards-container></div>
         <template data-report-template>
@@ -95,8 +99,23 @@
             </div>
         </template>
     </div>
-</div>
 
+    <div id="unread-div" class="hide">
+        <h1>Unread Predictions</h1><br>
+
+        <label for="unreadCount">Unread Predictions: </label>
+        <input type="text" id="unreadCount" class="count" disabled class="inp">......
+        <a title="Refresh Results" id="refresh-search3" onclick="callUnread();" class="fa">&#xf01e;</a><br><br><br>
+
+        <div class="prediction-cards" data-unread-cards-container></div>
+        <template data-unread-template>
+            <div class="card3">
+                <a class="unread-username" onclick="revealUnreadCard(this.innerHTML)" data-unread-username></a>
+                <button type="button" onclick="changeReadStatus(this.id)" class="readButon" data-read><i class="fa-solid fa fa-circle-check"></i></button>
+        </div>
+        </template>
+    </div>
+</div>
     <br><br><br><br><br><footer class="footer">
         <div class="footerDiv">
             <br><br>
