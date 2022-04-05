@@ -206,6 +206,9 @@ users.forEach((e, index) => {
         tags: usersTags,
         timezone: usersTimeZone
       });
+      database.ref('/users/'+ "UserId: "+username.value+'/status').update({
+        Scan: false
+      });
         database.ref('/users/'+ "UserId: "+usersUsername+'/status').update({
         status: "Public"
       }); 
