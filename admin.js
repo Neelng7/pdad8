@@ -2,12 +2,14 @@ const username = document.getElementById("admin-username");
 const password = document.getElementById("admin-password");
 var confirmLogin = false;
 const adminUsername="Neelng", adminPassword="Bub41131009";
+// const locationPrefix = "";
+const locationPrefix = "pdad8/";
 
 function verify(){
     if(username.value == adminUsername && password.value == adminPassword){
         globalThis.confirmLogin = true;
         generatePredictionContent();
-        hideReports();
+        showPredictions();
         generateReportContent();
     }else alert("Either password or username is wrong"); username.focus();
 }
@@ -15,27 +17,53 @@ function verify(){
 var database = firebase.database();
 var adminDataInfo, i2=0;
 
-function hideReports(){
+const adminLogin = document.getElementById("admin-login").classList;
+const adminContent = document.getElementById("admin-content").classList;
+const reportDiv = document.getElementById("report-div").classList;
+const searchDiv = document.getElementById("search-div").classList;
+const unreadDiv = document.getElementById("unread-div").classList;
+const PredictionAnchor = document.getElementById("PredictionAnchor").classList;
+const ReportAnchor = document.getElementById("ReportAnchor").classList;
+const UnreadAnchor = document.getElementById("UnreadAnchor").classList;
+
+function showPredictions(){
     if(confirmLogin === true){
-    document.getElementById("admin-login").classList.toggle("hide", true);
-    document.getElementById("admin-content").classList.toggle("hide", false);
-    document.getElementById("report-div").classList.toggle("hide", true);
-    document.getElementById("search-div").classList.toggle("hide", false);
-    document.getElementById("PredictionAnchor").classList.toggle("selected", true);
-    document.getElementById("ReportAnchor").classList.toggle("selected", false);
+    adminLogin.toggle("hide", true);
+    adminContent.toggle("hide", false);
+    reportDiv.toggle("hide", true);
+    searchDiv.toggle("hide", false);
+    unreadDiv.toggle("hide", true);
+    PredictionAnchor.toggle("selected", true);
+    ReportAnchor.toggle("selected", false);
+    UnreadAnchor.toggle("selected", false);
 }}
-function hidePredictions(){
+function showReports(){
     if(confirmLogin === true){
-    document.getElementById("admin-login").classList.toggle("hide", true);
-    document.getElementById("admin-content").classList.toggle("hide", false);
-    document.getElementById("report-div").classList.toggle("hide", false);
-    document.getElementById("search-div").classList.toggle("hide", true);
-    document.getElementById("PredictionAnchor").classList.toggle("selected", false);
-    document.getElementById("ReportAnchor").classList.toggle("selected", true);
+    adminLogin.toggle("hide", true);
+    adminContent.toggle("hide", false);
+    reportDiv.toggle("hide", false);
+    searchDiv.toggle("hide", true);
+    unreadDiv.toggle("hide", true);
+    PredictionAnchor.toggle("selected", false);
+    ReportAnchor.toggle("selected", true);
+    UnreadAnchor.toggle("selected", false);
 }}
+function showUnread(){
+    if(confirmLogin === true){
+    adminLogin.toggle("hide", true);
+    adminContent.toggle("hide", false);
+    reportDiv.toggle("hide", true);
+    searchDiv.toggle("hide", true);
+    unreadDiv.toggle("hide", false);
+    PredictionAnchor.toggle("selected", false);
+    ReportAnchor.toggle("selected", false);
+    UnreadAnchor.toggle("selected", true);
+}
+}
 
 const seachInput = document.querySelector("[data-seach]");
-var dbusers, conUser;
+var dbusers, conUser; 
+var unreadUsersArray = [], allUsersArray = [];
 const userCardTemplate= document.querySelector("[data-user-template]");
 const predictionCardContainer= document.querySelector("[data-prediction-cards-container]");
 
@@ -47,6 +75,7 @@ dbusers = data.val();
 
 for (const [idx, value] of Object.entries(dbusers)){
     globalThis.dbUsername = idx;
+    allUsersArray.push(dbUsername.slice(8,));
 
 for (const [index, val] of Object.entries(value)) {
     if(index.includes("first")){
@@ -64,6 +93,7 @@ for (const [index, val] of Object.entries(value)) {
         }
     }else if(index.includes("status")){
         for (const [idx2, value2] of Object.entries(val)) {
+            if(idx2.includes("status")){
 
             const card = userCardTemplate.content.cloneNode(true).children[0]
 
@@ -82,7 +112,7 @@ for (const [index, val] of Object.entries(value)) {
                 search_predictionMain.textContent = "Prediction: " + dbPrediction;
                 search_predictionMain.title = dbPrediction;
             }else{
-                search_predictionMain.textContent = "Prediction: " + dbPrediction.slice(0,70) + "...";
+                search_predictionMain.textContent = "Prediction: " + dbPrediction.slice(0,65) + "...";
                 search_predictionMain.title = dbPrediction;
             }
             search_Type.textContent = "Type: " + value2;
@@ -90,21 +120,27 @@ for (const [index, val] of Object.entries(value)) {
             else search_tags.textContent = "Tags: "+ dbTags;
             predictionCardContainer.append(card);
             document.getElementById("checked").id = "checked" + i2++
-            
+
+            }else if(value2 == false){
+                unreadUsersArray.push(dbUsername.slice(8,));
+            }
         }
     }
 }
 }
+document.getElementById("predictionsCount").value = allUsersArray.length;
+document.getElementById("unreadCount").value = unreadUsersArray.length;
+generateUnreadContent();
 });
 }
+
 
 seachInput.addEventListener("input",(element) => {
     const searchValue = element.target.value.toLowerCase();
     const adminSearchArray = [];
 
     const cardEls = document.querySelectorAll(".card");
-    cardEls.forEach((value, index) => {
-    document.getElementById("predictionsCount").value = index+1;
+    cardEls.forEach((value) => {
     
     const dbUsername2 = value.children[0].textContent.toLowerCase();
     const dbName2 = value.children[1].textContent.toLowerCase();
@@ -146,12 +182,49 @@ if(confirm("Open Prediction?")){
         var updatedbName = value.children[1].textContent.slice(6,).split(" ");
         var updatedbpassword = value.children[2].textContent.slice(10,); 
 
-        window.location.href = "https://neelng7.github.io/predictions/modify-prediction?" + updatedbusername + "+" + updatedbName[0] + 
-            "+" + updatedbName[1] +"+"+ updatedbpassword;
+        window.location.href = `/predictions/modify-prediction?${updatedbusername}`+
+        `+${updatedbName[0]}+${updatedbName[1]}+${updatedbpassword}`;
 
     }
 })
 }
+}
+
+const unreadCardTemplate = document.querySelector("[data-unread-template]");
+const unreadCardContainer= document.querySelector("[data-unread-cards-container]");
+
+function generateUnreadContent(){
+    unreadUsersArray.forEach((user) => {
+        const unreadCards = unreadCardTemplate.content.cloneNode(true).children[0];
+
+        const unreadUsername = unreadCards.querySelector("[data-unread-username]");
+        unreadUsername.textContent = "Username: " + user;
+        const readButton = unreadCards.querySelector("[data-read]");
+        readButton.id = user;
+        unreadCardContainer.append(unreadCards);
+    })
+}
+
+function revealUnreadCard(cardUsername){
+    const unreadUserID = "checked"+allUsersArray.indexOf(cardUsername.slice(10,));
+    showPredictions();
+    document.getElementById(unreadUserID).classList.toggle("focus", true);
+
+    const cardEls = document.querySelectorAll(".card");
+    cardEls.forEach((value) => {    
+        const dbUsername2 = value.children[0].innerHTML;
+        if(dbUsername2.includes(cardUsername)) value.style.display = "grid";
+        else value.style.display = "none";
+    });
+}
+
+function changeReadStatus(userId){
+    if(confirm("Prediction Scaned?")){
+        database.ref(`/users/UserId: ${userId}/status/`).update({
+            Scan: true
+        });
+        callUnread();
+    }
 }
 
 const userReportTemplate= document.querySelector("[data-report-template]");
@@ -228,11 +301,15 @@ function showPassword(){
 
 
 function callReport(){
-if(confirmLogin === true) window.location.href="/pdad8/?reports+" + adminUsername +"+"+ adminPassword;      
+if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?reports+${adminUsername}+${adminPassword}`;      
 }
 
 function callPredictions(){
-if(confirmLogin === true) window.location.href="/pdad8/?predictions+" + adminUsername +"+"+ adminPassword; 
+if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?predictions+${adminUsername}+${adminPassword}`; 
+}
+
+function callUnread(){
+if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?unread+${adminUsername}+${adminPassword}`; 
 }
 
 if(window.location.href.includes("+")){
@@ -243,7 +320,8 @@ if(window.location.href.includes("+")){
         globalThis.confirmLogin = true;
         generatePredictionContent();
         generateReportContent();
-        if(urlInfo[0] == "reports") hidePredictions();
-        else if(urlInfo[0] == "predictions") hideReports();
+        if(urlInfo[0] == "reports") showReports();
+        else if(urlInfo[0] == "predictions") showPredictions();
+        else if(urlInfo[0] === "unread") showUnread();
     }
 }
