@@ -2,8 +2,8 @@ const username = document.getElementById("admin-username");
 const password = document.getElementById("admin-password");
 var confirmLogin = false;
 const adminUsername="Neelng", adminPassword="Bub41131009";
-// const locationPrefix = "";
-const locationPrefix = "pdad8/";
+// const locationPrefix = "admin.html";
+const locationPrefix =  "pdad8";
 
 function verify(){
     if(username.value == adminUsername && password.value == adminPassword){
@@ -301,15 +301,15 @@ function showPassword(){
 
 
 function callReport(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?reports+${adminUsername}+${adminPassword}`;      
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?reports+${adminUsername}+${adminPassword}`;      
 }
 
 function callPredictions(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?predictions+${adminUsername}+${adminPassword}`; 
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?predictions+${adminUsername}+${adminPassword}`; 
 }
 
 function callUnread(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}admin.html?unread+${adminUsername}+${adminPassword}`; 
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?unread+${adminUsername}+${adminPassword}`; 
 }
 
 if(window.location.href.includes("+")){
