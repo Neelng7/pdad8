@@ -3,7 +3,7 @@ const password = document.getElementById("admin-password");
 var confirmLogin = false;
 const adminUsername="Neelng", adminPassword="Bub41131009";
 // const locationPrefix = "admin.html";
-const locationPrefix =  "pdad8";
+const locationPrefix =  "pdad8/";
 
 function verify(){
     if(username.value == adminUsername && password.value == adminPassword){
