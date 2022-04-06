@@ -154,16 +154,15 @@ seachInput.addEventListener("input",(element) => {
         if(dbUsername2.includes(searchValueSplit[n]) || dbName2.includes(searchValueSplit[n]) || 
             dbTags2.includes(searchValueSplit[n])){
             value.style.display = "grid";
-            adminSearchArray.push(1);   
         }else if(dbpassword2.includes(searchValueSplit[n]) || dbType2.includes(searchValueSplit[n])){
             value.style.display = "grid";
-            adminSearchArray.push(1);   
         }else{
             value.style.display = "none";
+            adminSearchArray.push(1);   
             break;
         }
     }
-        document.getElementById("resultsCount").innerText = (adminSearchArray.length) + " Search Reults Found"
+        document.getElementById("resultsCount").innerText = (cardEls.length-adminSearchArray.length) + " Search Reults Found"
 });
 });
 
