@@ -299,28 +299,30 @@ function showPassword(){
 }
 
 
+
 function callReport(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}?reports+${adminUsername}+${adminPassword}`;      
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?type=reports&user=${adminUsername}&code=${adminPassword}`;      
 }
 
 function callPredictions(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}?predictions+${adminUsername}+${adminPassword}`; 
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?type=predictions&user=${adminUsername}&code=${adminPassword}`; 
 }
 
 function callUnread(){
-if(confirmLogin === true) window.location.href=`/${locationPrefix}?unread+${adminUsername}+${adminPassword}`; 
+if(confirmLogin === true) window.location.href=`/${locationPrefix}?type=unread&user=${adminUsername}&code=${adminPassword}`; 
 }
 
-if(window.location.href.includes("+")){
-    
-    const urlInfo = (((window.location.href.split("?"))[1]).split("+"));
-
-    if(urlInfo[1]==adminUsername && urlInfo[2]==adminPassword){
+const URLparameters = new URLSearchParams(window.location.search);
+if(URLparameters.has('user')){
+    const URLuser = URLparameters.get("user");
+    const URLpass = URLparameters.get("code");
+    const URLtype = URLparameters.get("type");
+    if(URLuser==adminUsername && URLpass==adminPassword){
         globalThis.confirmLogin = true;
         generatePredictionContent();
         generateReportContent();
-        if(urlInfo[0] == "reports") showReports();
-        else if(urlInfo[0] == "predictions") showPredictions();
-        else if(urlInfo[0] === "unread") showUnread();
+        if(URLtype == "reports") showReports();
+        else if(URLtype == "predictions") showPredictions();
+        else if(URLtype == "unread") showUnread();
     }
 }
