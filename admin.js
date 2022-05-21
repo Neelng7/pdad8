@@ -181,8 +181,7 @@ if(confirm("Open Prediction?")){
         var updatedbName = value.children[1].textContent.slice(6,).split(" ");
         var updatedbpassword = value.children[2].textContent.slice(10,); 
 
-        window.location.href = `/predictions/modify-prediction?${updatedbusername}`+
-        `+${updatedbName[0]}+${updatedbName[1]}+${updatedbpassword}`;
+        window.location.href = `/modify-prediction.html?user=${updatedbusername}&name=${updatedbName[0]} ${updatedbName.slice(1,).join(" ")}&password=${updatedbpassword}`;
 
     }
 })
